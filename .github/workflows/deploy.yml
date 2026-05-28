@@ -24,44 +24,17 @@ jobs:
       - name: Checkout portfolio
         uses: actions/checkout@v4
 
-      - name: Checkout dashboard
-        uses: actions/checkout@v4
-        with:
-          repository: apsmono/dashboard
-          path: dashboard
-
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
 
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
-
       - name: Install portfolio dependencies
         run: npm ci
 
       - name: Build portfolio
         run: npm run build
-
-      - name: Install dashboard dependencies
-        working-directory: ./dashboard
-        run: bun install --frozen-lockfile
-
-      - name: Build dashboard
-        working-directory: ./dashboard
-        env:
-          VITE_API_BASE: ${{ secrets.API_BASE || 'https://emphasis-egg-books-foundation.trycloudflare.com' }}
-          DASHBOARD_BASE: /dashboard/
-        run: bun run build
-
-      - name: Copy dashboard into dist
-        run: |
-          mkdir -p dist/dashboard
-          cp -r dashboard/dist/* dist/dashboard/
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
