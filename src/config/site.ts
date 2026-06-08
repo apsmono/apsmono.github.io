@@ -1,6 +1,6 @@
 export const siteConfig = {
   name: "Arif Eko Pramono",
-  tagline: "Reliability-minded product engineer — React, React Native & Firebase — growing into AI & agent engineering.",
+  tagline: "Product Engineer — React · React Native · Firebase · AI agents. Reliability-minded, growing into AI & agent engineering.",
   email: "arifekop@ymail.com",
   avatar: "https://avatars.githubusercontent.com/u/51656350?v=4",
   location: "Blitar, Indonesia",
