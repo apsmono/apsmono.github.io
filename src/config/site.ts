@@ -3,7 +3,21 @@ export const siteConfig = {
   tagline: "Product Engineer — React · React Native · Firebase · AI agents. Reliability-minded, growing into AI & agent engineering.",
   email: "arifekop@ymail.com",
   avatar: "https://avatars.githubusercontent.com/u/51656350?v=4",
+  heroPhoto: "/photos/hero.jpg",
+  aboutPhoto: "/photos/about.jpg",
   location: "Blitar, Indonesia",
+  availability: "Open to AI & agent engineering work",
+  roles: [
+    "Product Engineer",
+    "React · React Native",
+    "Firebase · Node.js",
+    "AI & Agent Engineering",
+  ],
+  stats: [
+    { value: "~4 yrs", label: "Building production apps" },
+    { value: "3", label: "Platforms shipped (web · iOS · Android)" },
+    { value: "1", label: "Two-sided marketplace, end to end" },
+  ],
   bio: [
     "I'm a product engineer based in Blitar, Indonesia. For ~4 years I've built and operated a two-sided travel marketplace end to end at GetGoing — the web dashboard, the iOS/Android apps, and the Firebase Cloud Functions backend. I'm at my best making fragile, production-critical systems trustworthy: safe data migrations, hardened publish flows, transactional bug fixes, and data recovery.",
     "Lately I'm growing into AI and agent engineering — building autonomous research agents with CrewAI, with cost guardrails and idempotent scheduled runs. My daily stack is React, React Native, TypeScript, Firebase, and Node.js.",

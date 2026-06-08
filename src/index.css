@@ -1,21 +1,90 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg: #0a0a0a;
-  --color-surface: #121212;
-  --color-text: #f4f4f6;
-  --color-muted: #9c9c9d;
+  --color-bg: #0a0a0b;
+  --color-surface: #111113;
+  --color-card: #141416;
+  --color-text: #f5f5f7;
+  --color-muted: #9a9aa0;
+  --color-faint: #6b6b72;
   --color-accent: #ff6b35;
-  --color-border: #242728;
+  --color-accent-soft: #ff8c5f;
+  --color-border: #222226;
+  --color-success: #34d399;
+  --color-danger: #f87171;
+
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
 }
 
-body {
-  background: var(--color-bg);
-  color: var(--color-text);
-  font-family: 'Inter', system-ui, sans-serif;
-  -webkit-font-smoothing: antialiased;
+@layer base {
+  body {
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: #0a0a0b;
+  }
 }
 
-html {
-  scroll-behavior: smooth;
+/* Subtle warm glow for the editorial feel */
+.bg-grain {
+  background-image: radial-gradient(
+    120% 120% at 50% 0%,
+    rgba(255, 107, 53, 0.06) 0%,
+    transparent 45%
+  );
+}
+
+/* Eyebrow label */
+.eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-faint);
+  font-weight: 600;
+}
+
+.section-index {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.1em;
+}
+
+/* Reveal-on-scroll */
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal {
+  opacity: 0;
+}
+
+.reveal.is-visible {
+  animation: reveal-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal.is-visible {
+    opacity: 1;
+    animation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
 }

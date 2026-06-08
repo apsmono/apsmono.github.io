@@ -21,8 +21,20 @@ export function PortfolioPage() {
         ]}
       />
       <main>
-        <Hero name={siteConfig.name} tagline={siteConfig.tagline} />
-        <About avatar={siteConfig.avatar} bio={siteConfig.bio} />
+        <Hero
+          name={siteConfig.name}
+          roles={siteConfig.roles}
+          location={siteConfig.location}
+          availability={siteConfig.availability}
+          photo={siteConfig.heroPhoto}
+          fallbackPhoto={siteConfig.avatar}
+        />
+        <About
+          photo={siteConfig.aboutPhoto}
+          fallbackPhoto={siteConfig.avatar}
+          bio={siteConfig.bio}
+          stats={siteConfig.stats}
+        />
         <Projects projects={siteConfig.projects} />
         <Skills skills={siteConfig.skills} />
         <Contact contacts={siteConfig.contacts} />

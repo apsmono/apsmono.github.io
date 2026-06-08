@@ -3,19 +3,26 @@ import { Badge } from "@/components/ui/Badge";
 import { ArrowUpRight } from "lucide-react";
 import * as LucideIcons from "lucide-react";
 import type { Project } from "@/types";
+import { SectionHeader } from "./SectionHeader";
+import { useReveal } from "@/hooks/useReveal";
 
 interface ProjectsProps {
   projects: Project[];
 }
 
 export function Projects({ projects }: ProjectsProps) {
+  const ref = useReveal<HTMLDivElement>();
   return (
-    <section id="projects" className="px-6 py-20">
+    <section id="projects" className="border-t border-border px-6 py-24">
       <div className="mx-auto max-w-6xl">
-        <h2 className="mb-2 text-center text-3xl font-bold">Projects</h2>
-        <p className="mb-12 text-center text-muted">Things I've built.</p>
+        <SectionHeader
+          index="02"
+          eyebrow="Work"
+          title="Projects"
+          description="A selection of things I've built and shipped."
+        />
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div ref={ref} className="reveal grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((project) => {
             const Icon = ((LucideIcons as unknown) as Record<string, React.ComponentType<{ size?: number; className?: string }>>)[project.icon] || LucideIcons.Circle;
             return (

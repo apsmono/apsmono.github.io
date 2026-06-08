@@ -1,19 +1,26 @@
 import { Card } from "@/components/ui/Card";
 import * as LucideIcons from "lucide-react";
 import type { Contact } from "@/types";
+import { SectionHeader } from "./SectionHeader";
+import { useReveal } from "@/hooks/useReveal";
 
 interface ContactProps {
   contacts: Contact[];
 }
 
 export function Contact({ contacts }: ContactProps) {
+  const ref = useReveal<HTMLDivElement>();
   return (
-    <section id="contact" className="px-6 py-20">
-      <div className="mx-auto max-w-3xl">
-        <h2 className="mb-2 text-center text-3xl font-bold">Contact</h2>
-        <p className="mb-12 text-center text-muted">Let's build something together.</p>
+    <section id="contact" className="border-t border-border px-6 py-24">
+      <div className="mx-auto max-w-6xl">
+        <SectionHeader
+          index="04"
+          eyebrow="Contact"
+          title="Let's build something together."
+          description="Have a project in mind, or just want to say hi? Reach out on any of these."
+        />
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div ref={ref} className="reveal grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {contacts.map((contact) => {
             const Icon = ((LucideIcons as unknown) as Record<string, React.ComponentType<{ size?: number; className?: string }>>)[contact.icon] || LucideIcons.Circle;
             return (
