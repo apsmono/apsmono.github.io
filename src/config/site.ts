@@ -21,44 +21,34 @@ export const siteConfig = {
   bio: [
     "I'm a product engineer based in Blitar, Indonesia. For ~4 years I've built and operated a two-sided travel marketplace end to end at GetGoing — the web dashboard, the iOS/Android apps, and the Firebase Cloud Functions backend. I'm at my best making fragile, production-critical systems trustworthy: safe data migrations, hardened publish flows, transactional bug fixes, and data recovery.",
     "Lately I'm growing into AI and agent engineering — building autonomous research agents with CrewAI, with cost guardrails and idempotent scheduled runs. My daily stack is React, React Native, TypeScript, Firebase, and Node.js.",
-    // PLACEHOLDER — add a third paragraph here (e.g. what you're looking for next, your working style, or interests outside code).
-    "[Add more about yourself here — what kind of problems you love solving, how you like to work with a team, or what you're aiming for next.]",
+    "I work best on a small, fast-moving team where I can own a feature end to end — translating a designer's specs into polished UI and standing behind the backend that powers it. What I'm reaching for next is AI and agent engineering: systems that run reliably in production, not just in demos.",
   ],
-  // PLACEHOLDER — replace with your real education history. Add or remove entries as needed.
   education: [
     {
-      school: "[University / Institution name]",
-      credential: "[Degree, e.g. B.Sc. in Computer Science]",
-      period: "[2016 – 2020]",
-      detail: "[Optional: focus area, honors, thesis, or notable coursework.]",
+      school: "HTW Berlin",
+      credential: "Business Mathematics (Wirtschaftsmathematik)",
+      period: "2015 – 2021",
+      detail:
+        "Hochschule für Technik und Wirtschaft Berlin. Completed full coursework; left before the final thesis (Bachelorarbeit) — transcript available on request. Preceded by Studienkolleg (foundation year), HTW Berlin, 2014.",
     },
     {
-      school: "[Bootcamp / Course / Certification provider]",
-      credential: "[Certificate or program name]",
-      period: "[Year]",
-      detail: "[Optional: what you learned or built.]",
+      school: "Certifications",
+      credential: "Introduction to R · Intermediate R",
+      period: "",
     },
   ],
-  // PLACEHOLDER — replace with your real work history. Add or remove entries as needed.
   experience: [
     {
-      role: "[Your role, e.g. Product Engineer]",
-      company: "GetGoing",
-      period: "[2021 – Present]",
-      location: "[Remote / City]",
+      role: "React Specialist",
+      company: "GetGoing (PT Gue Eksplorasi Terus)",
+      period: "Sept 2022 – Present",
+      location: "Remote",
       highlights: [
-        "[Key achievement or responsibility #1 — quantify impact where you can.]",
-        "[Key achievement or responsibility #2.]",
-        "[Key achievement or responsibility #3.]",
-      ],
-    },
-    {
-      role: "[Previous role]",
-      company: "[Previous company]",
-      period: "[Year – Year]",
-      location: "[Remote / City]",
-      highlights: [
-        "[What you did and the impact it had.]",
+        "One of ~4 engineers on a lean product team — own features end to end across the traveler app, the guide app, the marketing site, and the internal Travel Manager dashboard, spanning iOS, Android, and web.",
+        "Substantial contributor (~155+ commits) to the GetGoing traveler app (React Native + Expo + TypeScript, 4.8★ on Google Play) — trip planner, local-guide and package booking, in-app chat, maps, Xendit payments, and a camera scan-itinerary flow.",
+        "Hardened the dashboard's most fragile flows: built a pre-publish validator and error modal, migrated live itinerary data shapes (array→object) with server-side backfill, and recovered lost data via lazy migrations — eliminating silent data loss in the publish pipeline.",
+        "Authored the majority of the Firebase Cloud Functions v2 backend (Node 22), helping split a Next.js monorepo into a deploy-isolated functions repo across 10 domain codebases.",
+        "Fixed transactional integrity bugs in the user wallet (runTransaction race/safety) and shipped Cloud Functions for payments (Xendit), feedback, and AI generation (Gemini / Imagen / Vertex AI); built firebase-admin tooling for surgical recovery of corrupted, deeply-nested Firestore records.",
       ],
     },
   ],
