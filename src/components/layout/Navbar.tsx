@@ -13,6 +13,10 @@ interface NavbarProps {
   logoAccent: string;
 }
 
+const isExternal = (href: string) => /^https?:\/\//.test(href);
+const externalProps = (href: string) =>
+  isExternal(href) ? { target: "_blank", rel: "noopener noreferrer" } : {};
+
 export function Navbar({ items, logo, logoAccent }: NavbarProps) {
   const [open, setOpen] = useState(false);
 
@@ -29,6 +33,7 @@ export function Navbar({ items, logo, logoAccent }: NavbarProps) {
             <li key={item.href}>
               <a
                 href={item.href}
+                {...externalProps(item.href)}
                 className="text-sm font-medium text-muted transition-colors hover:text-text"
               >
                 {item.label}
@@ -56,6 +61,7 @@ export function Navbar({ items, logo, logoAccent }: NavbarProps) {
           <a
             key={item.href}
             href={item.href}
+            {...externalProps(item.href)}
             className="block py-2 text-sm font-medium text-muted transition-colors hover:text-text"
             onClick={() => setOpen(false)}
           >

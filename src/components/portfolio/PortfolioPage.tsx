@@ -11,14 +11,13 @@ export function PortfolioPage() {
   return (
     <div className="min-h-screen bg-bg text-text">
       <Navbar
-        logo="Arif"
-        logoAccent="Pramono"
+        logo="aps"
+        logoAccent="mono"
         items={[
           { label: "About", href: "#about" },
           { label: "Projects", href: "#projects" },
           { label: "Skills", href: "#skills" },
           { label: "Contact", href: "#contact" },
-          { label: "Dashboard", href: "https://dashboard.apsmono.com" },
         ]}
       />
       <main>

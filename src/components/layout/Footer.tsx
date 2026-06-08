@@ -4,7 +4,14 @@ export function Footer() {
       <p>
         © {new Date().getFullYear()} Arif Eko Pramono. All rights reserved.
         <span className="mx-2">·</span>
-        <a href="#/" className="hover:text-accent transition-colors">Dashboard</a>
+        <a
+          href="https://dashboard.apsmono.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-accent transition-colors"
+        >
+          Dashboard
+        </a>
       </p>
     </footer>
   );

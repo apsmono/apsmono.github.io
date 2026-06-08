@@ -1,70 +1,54 @@
-# Getting Started with Create React App
+# apsmono.github.io
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+My personal portfolio — the public front door at **[apsmono.com](https://apsmono.com)**.
 
-## Available Scripts
+This is the GitHub Pages **user site** (repo name = `apsmono.github.io`), served on the apex
+custom domain `apsmono.com` via the `CNAME` file. Built with **Vite + React 19 + TypeScript**
+and **Tailwind CSS v4**.
 
-In the project directory, you can run:
+## Surfaces
 
-### `npm start`
+The portfolio is one of three public-facing surfaces, each on its own origin:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+| Surface | URL | Repo |
+|---------|-----|------|
+| Portfolio (this) | [apsmono.com](https://apsmono.com) | `apsmono.github.io` |
+| Command center | [dashboard.apsmono.com](https://dashboard.apsmono.com) | `dashboard` |
+| API | `api.apsmono.com` | backend |
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+The portfolio links out to the dashboard and to project source on GitHub. The dashboard is
+auth-gated and intentionally not cross-linked from public pages.
 
-### `npm test`
+## Structure
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+src/
+  config/site.ts          # single source of truth: bio, projects, skills, contacts, links
+  components/
+    layout/               # Navbar, Footer, ThemeProvider
+    portfolio/            # Hero, About, Projects, Skills, Contact, PortfolioPage
+    ui/                   # Card, Badge, Button
+```
 
-### `npm run build`
+Content is data-driven — edit `src/config/site.ts` to change copy, projects, or links;
+components render from it. Navigation is in-page hash anchors (`#about`, `#projects`,
+`#skills`, `#contact`); external links (e.g. the dashboard) open in a new tab.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Run locally
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+npm install
+npm run dev      # local dev server (http://localhost:5173)
+npm run build    # tsc type-check + Vite production build → dist/
+npm run preview  # preview the production build
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Deploy
 
-### `npm run eject`
+GitHub Actions (`.github/workflows/deploy.yml`) builds on every push to `master` and
+publishes `dist/` to GitHub Pages. The `apsmono.com` custom domain and **Enforce HTTPS**
+are configured in repo → Settings → Pages; the apex domain is set via `CNAME`.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Maintained by [Arif (@apsmono)](https://github.com/apsmono) · React · React Native · Firebase · growing into AI / agent engineering.
