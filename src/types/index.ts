@@ -44,6 +44,21 @@ export interface Skill {
   icon: string;
 }
 
+export interface Education {
+  school: string;
+  credential: string;
+  period: string;
+  detail?: string;
+}
+
+export interface Experience {
+  role: string;
+  company: string;
+  period: string;
+  location?: string;
+  highlights: string[];
+}
+
 export interface Contact {
   label: string;
   value: string;

@@ -18,6 +18,10 @@ export function useReveal<T extends HTMLElement = HTMLDivElement>(
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("is-visible");
+            // Cascade to any nested `.reveal` children (enables stagger).
+            entry.target
+              .querySelectorAll(".reveal")
+              .forEach((child) => child.classList.add("is-visible"));
             observer.unobserve(entry.target);
           }
         });

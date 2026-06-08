@@ -21,16 +21,26 @@ export function Hero({
   const [first, ...rest] = name.split(" ");
 
   return (
-    <section className="bg-grain relative min-h-screen px-6 pt-28 pb-16 md:pt-32">
+    <section className="bg-grain relative min-h-screen overflow-hidden px-6 pt-28 pb-16 md:pt-32">
+      {/* Soft cool blobs */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -left-24 top-24 -z-10 h-72 w-72 rounded-full bg-accent/15 blur-3xl"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -right-16 top-48 -z-10 h-80 w-80 rounded-full bg-accent-soft/15 blur-3xl"
+      />
+
       <div className="mx-auto grid max-w-6xl items-center gap-12 md:grid-cols-[1.05fr_0.95fr] md:gap-16">
         {/* Text column */}
-        <div className="order-2 md:order-1">
+        <div className="hero-in order-2 md:order-1">
           <span className="eyebrow">Portfolio — apsmono</span>
 
           <h1 className="mt-5 text-[clamp(2.75rem,8vw,5.5rem)] font-extrabold leading-[0.95] tracking-tight">
             {first}
             <br />
-            <span className="bg-gradient-to-r from-text via-text to-accent bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-accent to-accent-soft bg-clip-text text-transparent">
               {rest.join(" ")}
             </span>
           </h1>
@@ -44,7 +54,7 @@ export function Hero({
             ))}
           </div>
 
-          <div className="mt-7 inline-flex items-center gap-2 rounded-full border border-border bg-surface/60 px-4 py-1.5 text-sm text-muted">
+          <div className="mt-7 inline-flex items-center gap-2 rounded-full border border-border bg-card/70 px-4 py-1.5 text-sm text-muted shadow-sm backdrop-blur-sm">
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-success" />
@@ -75,10 +85,10 @@ export function Hero({
         </div>
 
         {/* Portrait column */}
-        <div className="order-1 md:order-2">
+        <div className="hero-in order-1 md:order-2" style={{ animationDelay: "0.12s" }}>
           <div className="relative mx-auto max-w-sm md:max-w-none">
-            <div className="absolute -inset-3 -z-10 rounded-[1.75rem] bg-gradient-to-tr from-accent/20 via-transparent to-transparent blur-2xl" />
-            <div className="relative overflow-hidden rounded-3xl border border-border">
+            <div className="absolute -inset-3 -z-10 rounded-[1.75rem] bg-gradient-to-tr from-accent/25 via-accent-soft/10 to-transparent blur-2xl" />
+            <div className="relative overflow-hidden rounded-3xl border border-border shadow-soft">
               <img
                 src={photo}
                 onError={(e) => {
@@ -87,8 +97,8 @@ export function Hero({
                 alt={name}
                 className="aspect-[4/5] w-full object-cover object-top"
               />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-bg/55 via-transparent to-transparent" />
-              <div className="absolute bottom-4 left-4 rounded-lg border border-border bg-bg/70 px-3 py-1.5 text-xs font-medium text-muted backdrop-blur-sm">
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-bg/15 via-transparent to-transparent" />
+              <div className="absolute bottom-4 left-4 rounded-lg border border-border bg-card/80 px-3 py-1.5 text-xs font-medium text-muted backdrop-blur-sm">
                 {location}
               </div>
             </div>

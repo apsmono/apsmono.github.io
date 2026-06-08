@@ -5,10 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Arif Eko Pramono — Product Engineer (React · Firebase · AI agents)</title>
   <meta name="description" content="Product Engineer — React · React Native · Firebase · AI agents. Reliability-minded, growing into AI & agent engineering. Based in Blitar, Indonesia.">
-  <link rel="icon" type="image/svg+xml" href="/favicon.ico">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" href="/favicon.svg">
+  <meta name="theme-color" content="#0284c7">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script>
+    // Apply saved palette + theme before paint to avoid a flash.
+    (function () {
+      try {
+        var p = localStorage.getItem("aps-palette");
+        var valid = ["current", "mono", "image", "dev"];
+        document.documentElement.setAttribute("data-palette", valid.indexOf(p) > -1 ? p : "current");
+        var t = localStorage.getItem("dash-theme");
+        if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {
+        document.documentElement.setAttribute("data-palette", "current");
+      }
+    })();
+  </script>
 </head>
 <body>
   <div id="root"></div>

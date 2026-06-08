@@ -18,7 +18,7 @@ export function About({ photo, fallbackPhoto, bio, stats }: AboutProps) {
   const ref = useReveal<HTMLDivElement>();
 
   return (
-    <section id="about" className="border-t border-border px-6 py-24">
+    <section id="about" className="border-t border-border bg-surface px-6 py-24">
       <div className="mx-auto max-w-6xl">
         <SectionHeader
           index="01"
@@ -32,7 +32,7 @@ export function About({ photo, fallbackPhoto, bio, stats }: AboutProps) {
         >
           {/* Portrait */}
           <div className="relative mx-auto w-full max-w-xs md:max-w-none">
-            <div className="overflow-hidden rounded-2xl border border-border">
+            <div className="overflow-hidden rounded-2xl border border-border shadow-soft">
               <img
                 src={photo}
                 onError={(e) => {
@@ -56,7 +56,7 @@ export function About({ photo, fallbackPhoto, bio, stats }: AboutProps) {
             <div className="mt-10 grid grid-cols-3 gap-4 border-t border-border pt-8">
               {stats.map((stat) => (
                 <div key={stat.label}>
-                  <div className="text-2xl font-bold text-text md:text-3xl">
+                  <div className="bg-gradient-to-r from-accent to-accent-soft bg-clip-text text-2xl font-bold text-transparent md:text-3xl">
                     {stat.value}
                   </div>
                   <div className="mt-1 text-xs leading-snug text-faint">

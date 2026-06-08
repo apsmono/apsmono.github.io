@@ -1,6 +1,8 @@
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, BookOpen, FileDown } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { AppearanceMenu } from "./AppearanceMenu";
+import { Logo } from "./Logo";
 
 interface NavItem {
   label: string;
@@ -11,44 +13,74 @@ interface NavbarProps {
   items: NavItem[];
   logo: string;
   logoAccent: string;
+  onEnterReader: () => void;
+  onDownloadPdf: () => void;
 }
 
 const isExternal = (href: string) => /^https?:\/\//.test(href);
 const externalProps = (href: string) =>
   isExternal(href) ? { target: "_blank", rel: "noopener noreferrer" } : {};
 
-export function Navbar({ items, logo, logoAccent }: NavbarProps) {
+export function Navbar({ items, logo, logoAccent, onEnterReader, onDownloadPdf }: NavbarProps) {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-bg/85 backdrop-blur-md">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <a href="#" className="text-xl font-bold text-text">
-          {logo}
-          <span className="text-accent">{logoAccent}</span>
+    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-bg/80 backdrop-blur-md">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3.5">
+        <a href="#" className="flex items-center gap-2 text-xl font-bold tracking-tight text-text">
+          <Logo size={26} />
+          <span>
+            {logo}
+            <span className="text-accent">{logoAccent}</span>
+          </span>
         </a>
 
-        <ul className="hidden items-center gap-8 md:flex">
-          {items.map((item) => (
-            <li key={item.href}>
-              <a
-                href={item.href}
-                {...externalProps(item.href)}
-                className="text-sm font-medium text-muted transition-colors hover:text-text"
-              >
-                {item.label}
-              </a>
-            </li>
-          ))}
-        </ul>
+        <div className="hidden items-center gap-7 md:flex">
+          <ul className="flex items-center gap-7">
+            {items.map((item) => (
+              <li key={item.href}>
+                <a
+                  href={item.href}
+                  {...externalProps(item.href)}
+                  className="text-sm font-medium text-muted transition-colors hover:text-text"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
 
-        <button
-          className="md:hidden"
-          onClick={() => setOpen(!open)}
-          aria-label="Toggle menu"
-        >
-          {open ? <X size={24} /> : <Menu size={24} />}
-        </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={onEnterReader}
+              title="Reader view"
+              aria-label="Reader view"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card/70 text-muted shadow-sm transition-colors hover:text-text"
+            >
+              <BookOpen size={16} />
+            </button>
+            <button
+              onClick={onDownloadPdf}
+              title="Download PDF"
+              aria-label="Download PDF"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card/70 text-muted shadow-sm transition-colors hover:text-text"
+            >
+              <FileDown size={16} />
+            </button>
+            <AppearanceMenu />
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2 md:hidden">
+          <AppearanceMenu />
+          <button
+            onClick={() => setOpen(!open)}
+            aria-label="Toggle menu"
+            className="text-text"
+          >
+            {open ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
 
       <div
@@ -68,6 +100,26 @@ export function Navbar({ items, logo, logoAccent }: NavbarProps) {
             {item.label}
           </a>
         ))}
+        <div className="mt-2 flex gap-2 border-t border-border pt-3">
+          <button
+            onClick={() => {
+              setOpen(false);
+              onEnterReader();
+            }}
+            className="flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-border py-2 text-sm font-medium text-muted hover:text-text"
+          >
+            <BookOpen size={15} /> Reader
+          </button>
+          <button
+            onClick={() => {
+              setOpen(false);
+              onDownloadPdf();
+            }}
+            className="flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-border py-2 text-sm font-medium text-muted hover:text-text"
+          >
+            <FileDown size={15} /> PDF
+          </button>
+        </div>
       </div>
     </nav>
   );

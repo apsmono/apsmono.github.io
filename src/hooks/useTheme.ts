@@ -1,8 +1,11 @@
 import { useState, useEffect, useCallback } from "react";
 
-type Theme = "dark" | "light" | "system";
+export type Theme = "dark" | "light" | "system";
+export type Palette = "current" | "mono" | "image" | "dev";
 
-const STORAGE_KEY = "dash-theme";
+const THEME_KEY = "dash-theme";
+const PALETTE_KEY = "aps-palette";
+const PALETTES: Palette[] = ["current", "mono", "image", "dev"];
 
 function getSystemTheme(): "dark" | "light" {
   return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
@@ -14,7 +17,11 @@ function getEffectiveTheme(theme: Theme): "dark" | "light" {
 
 export function useTheme() {
   const [theme, setThemeState] = useState<Theme>(() => {
-    return (localStorage.getItem(STORAGE_KEY) as Theme) || "system";
+    return (localStorage.getItem(THEME_KEY) as Theme) || "system";
+  });
+  const [palette, setPaletteState] = useState<Palette>(() => {
+    const stored = localStorage.getItem(PALETTE_KEY) as Palette;
+    return PALETTES.includes(stored) ? stored : "current";
   });
 
   useEffect(() => {
@@ -27,20 +34,35 @@ export function useTheme() {
   }, [theme]);
 
   useEffect(() => {
+    document.documentElement.setAttribute("data-palette", palette);
+  }, [palette]);
+
+  // Re-render when the OS theme changes while on "system".
+  const [, force] = useState(0);
+  useEffect(() => {
     const mql = window.matchMedia("(prefers-color-scheme: dark)");
     const handler = () => {
-      if (theme === "system") {
-        document.documentElement.removeAttribute("data-theme");
-      }
+      if (theme === "system") force((n) => n + 1);
     };
     mql.addEventListener("change", handler);
     return () => mql.removeEventListener("change", handler);
   }, [theme]);
 
   const setTheme = useCallback((t: Theme) => {
-    localStorage.setItem(STORAGE_KEY, t);
+    localStorage.setItem(THEME_KEY, t);
     setThemeState(t);
   }, []);
 
-  return { theme, setTheme, effective: getEffectiveTheme(theme) };
+  const setPalette = useCallback((p: Palette) => {
+    localStorage.setItem(PALETTE_KEY, p);
+    setPaletteState(p);
+  }, []);
+
+  return {
+    theme,
+    setTheme,
+    palette,
+    setPalette,
+    effective: getEffectiveTheme(theme),
+  };
 }

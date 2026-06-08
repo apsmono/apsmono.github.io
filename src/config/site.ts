@@ -21,6 +21,46 @@ export const siteConfig = {
   bio: [
     "I'm a product engineer based in Blitar, Indonesia. For ~4 years I've built and operated a two-sided travel marketplace end to end at GetGoing — the web dashboard, the iOS/Android apps, and the Firebase Cloud Functions backend. I'm at my best making fragile, production-critical systems trustworthy: safe data migrations, hardened publish flows, transactional bug fixes, and data recovery.",
     "Lately I'm growing into AI and agent engineering — building autonomous research agents with CrewAI, with cost guardrails and idempotent scheduled runs. My daily stack is React, React Native, TypeScript, Firebase, and Node.js.",
+    // PLACEHOLDER — add a third paragraph here (e.g. what you're looking for next, your working style, or interests outside code).
+    "[Add more about yourself here — what kind of problems you love solving, how you like to work with a team, or what you're aiming for next.]",
+  ],
+  // PLACEHOLDER — replace with your real education history. Add or remove entries as needed.
+  education: [
+    {
+      school: "[University / Institution name]",
+      credential: "[Degree, e.g. B.Sc. in Computer Science]",
+      period: "[2016 – 2020]",
+      detail: "[Optional: focus area, honors, thesis, or notable coursework.]",
+    },
+    {
+      school: "[Bootcamp / Course / Certification provider]",
+      credential: "[Certificate or program name]",
+      period: "[Year]",
+      detail: "[Optional: what you learned or built.]",
+    },
+  ],
+  // PLACEHOLDER — replace with your real work history. Add or remove entries as needed.
+  experience: [
+    {
+      role: "[Your role, e.g. Product Engineer]",
+      company: "GetGoing",
+      period: "[2021 – Present]",
+      location: "[Remote / City]",
+      highlights: [
+        "[Key achievement or responsibility #1 — quantify impact where you can.]",
+        "[Key achievement or responsibility #2.]",
+        "[Key achievement or responsibility #3.]",
+      ],
+    },
+    {
+      role: "[Previous role]",
+      company: "[Previous company]",
+      period: "[Year – Year]",
+      location: "[Remote / City]",
+      highlights: [
+        "[What you did and the impact it had.]",
+      ],
+    },
   ],
   projects: [
     {
