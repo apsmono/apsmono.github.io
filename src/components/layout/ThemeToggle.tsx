@@ -6,8 +6,8 @@ type Theme = "light" | "dark" | "system";
 
 const options: { value: Theme; label: string; Icon: typeof Sun }[] = [
   { value: "light", label: "Light", Icon: Sun },
-  { value: "system", label: "System", Icon: Monitor },
   { value: "dark", label: "Dark", Icon: Moon },
+  { value: "system", label: "System", Icon: Monitor },
 ];
 
 export function ThemeToggle({ className }: { className?: string }) {

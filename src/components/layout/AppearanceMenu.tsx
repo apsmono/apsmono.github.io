@@ -6,8 +6,8 @@ import { cn } from "@/lib/utils";
 
 const modes: { value: Theme; label: string; Icon: typeof Sun }[] = [
   { value: "light", label: "Light", Icon: Sun },
-  { value: "system", label: "System", Icon: Monitor },
   { value: "dark", label: "Dark", Icon: Moon },
+  { value: "system", label: "System", Icon: Monitor },
 ];
 
 const palettes: { value: Palette; label: string; dots: [string, string, string] }[] = [
