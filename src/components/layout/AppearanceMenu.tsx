@@ -45,11 +45,28 @@ export function AppearanceMenu() {
         aria-haspopup="menu"
         aria-expanded={open}
         aria-label="Appearance settings"
-        className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card/70 px-3 py-1.5 text-sm text-muted shadow-sm backdrop-blur-sm transition-colors hover:text-text"
+        className="group inline-flex items-center rounded-full border border-border bg-card/70 px-2.5 py-1.5 text-sm text-muted shadow-sm backdrop-blur-sm transition-colors hover:text-text"
       >
-        <PaletteIcon size={15} />
-        <span className="hidden sm:inline">{activePalette.label}</span>
-        <ChevronDown size={14} className={cn("transition-transform", open && "rotate-180")} />
+        <PaletteIcon size={15} className="shrink-0" />
+        <span
+          className={cn(
+            "overflow-hidden whitespace-nowrap transition-all duration-300",
+            open
+              ? "ml-1.5 max-w-[10rem] opacity-100"
+              : "max-w-0 opacity-0 group-hover:ml-1.5 group-hover:max-w-[10rem] group-hover:opacity-100"
+          )}
+        >
+          {activePalette.label}
+        </span>
+        <ChevronDown
+          size={14}
+          className={cn(
+            "shrink-0 transition-all duration-300",
+            open
+              ? "ml-1 max-w-[1rem] rotate-180 opacity-100"
+              : "max-w-0 opacity-0 group-hover:ml-1 group-hover:max-w-[1rem] group-hover:opacity-100"
+          )}
+        />
       </button>
 
       {open && (

@@ -3,7 +3,7 @@
   <circle cx="54" cy="80" r="33"/><line x1="87" y1="40" x2="87" y2="120"/>
   <line x1="123" y1="40" x2="123" y2="160"/><circle cx="156" cy="80" r="33"/>
 </g>
-<g fill="none" stroke="#22B8CF" stroke-width="14" stroke-linecap="round" stroke-linejoin="round">
+<g fill="none" stroke="#1B9E5A" stroke-width="14" stroke-linecap="round" stroke-linejoin="round">
   <path d="M 265,60 A 20 20 0 1 0 245,80 A 20 20 0 1 1 225,100"/>
   <line x1="245" y1="34" x2="245" y2="126"/>
 </g>

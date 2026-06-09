@@ -50,19 +50,23 @@ export function Navbar({ items, logo, logoAccent, onEnterReader, onDownloadPdf }
           <div className="flex items-center gap-2">
             <button
               onClick={onEnterReader}
-              title="Reader view"
               aria-label="Reader view"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card/70 text-muted shadow-sm transition-colors hover:text-text"
+              className="group flex h-9 items-center rounded-full border border-border bg-card/70 px-2.5 text-muted shadow-sm transition-colors hover:text-text"
             >
-              <BookOpen size={16} />
+              <BookOpen size={16} className="shrink-0" />
+              <span className="max-w-0 overflow-hidden whitespace-nowrap text-sm font-medium opacity-0 transition-all duration-300 group-hover:ml-1.5 group-hover:max-w-[6rem] group-hover:opacity-100">
+                Reader view
+              </span>
             </button>
             <button
               onClick={onDownloadPdf}
-              title="Download PDF"
               aria-label="Download PDF"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card/70 text-muted shadow-sm transition-colors hover:text-text"
+              className="group flex h-9 items-center rounded-full border border-border bg-card/70 px-2.5 text-muted shadow-sm transition-colors hover:text-text"
             >
-              <FileDown size={16} />
+              <FileDown size={16} className="shrink-0" />
+              <span className="max-w-0 overflow-hidden whitespace-nowrap text-sm font-medium opacity-0 transition-all duration-300 group-hover:ml-1.5 group-hover:max-w-[6rem] group-hover:opacity-100">
+                Download PDF
+              </span>
             </button>
             <AppearanceMenu />
           </div>
