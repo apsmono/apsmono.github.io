@@ -3,23 +3,32 @@ interface LogoProps {
   className?: string;
 }
 
-/** Compact "A" monogram mark — uses the active accent via currentColor stops. */
+/**
+ * The brand "a" mark — a geometric circle + stem drawn as line-art.
+ * Uses currentColor so it inherits the surrounding text color (ink on
+ * light, paper/white on dark). Per the brand kit the mark is never
+ * tinted with the interface accent.
+ */
 export function Logo({ size = 28, className }: LogoProps) {
   return (
     <svg
-      viewBox="0 0 64 64"
+      viewBox="24 24 112 112"
       width={size}
       height={size}
       className={className}
       role="img"
-      aria-label="apsmono logo"
+      aria-label="aps logo"
     >
-      <rect width="64" height="64" rx="16" className="fill-accent" />
-      <path
-        d="M18 44 L26 20 h6 l8 24 h-6.2 l-1.5-4.8h-7.6L21.2 44 H18Z M24.7 34.2h4.6L27 26.6 24.7 34.2Z"
-        className="fill-on-accent"
-      />
-      <circle cx="44" cy="40" r="4" className="fill-on-accent" />
+      <g
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={15}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <circle cx="80" cy="80" r="40" />
+        <line x1="120" y1="40" x2="120" y2="120" />
+      </g>
     </svg>
   );
 }

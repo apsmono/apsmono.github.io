@@ -11,7 +11,7 @@ const modes: { value: Theme; label: string; Icon: typeof Sun }[] = [
 ];
 
 const palettes: { value: Palette; label: string; dots: [string, string, string] }[] = [
-  { value: "current", label: "Cool & airy", dots: ["#0284c7", "#06b6d4", "#f6f9fc"] },
+  { value: "current", label: "aps · Paper & ink", dots: ["#16150f", "#2f6bff", "#f5f4ef"] },
   { value: "mono", label: "Monochrome", dots: ["#18181b", "#a1a1aa", "#fafafa"] },
   { value: "image", label: "Coral & teal", dots: ["#4f9aa1", "#c97b6b", "#f3f6f7"] },
   { value: "dev", label: "Indigo & slate", dots: ["#4f46e5", "#6366f1", "#f8fafc"] },

@@ -5,85 +5,89 @@
  * Two independent axes:
  *   data-palette = which color set  (current | mono | image | dev)
  *   data-theme   = light | dark | (absent = follow system)
- * "current" light values live in @theme so utilities exist and the
- * site renders correctly before JS sets the attributes.
+ * "current" is the aps brand identity (paper / ink / accent #2F6BFF) and
+ * its light values live in @theme so utilities exist and the site renders
+ * correctly before JS sets the attributes.
  * ============================================================== */
 @theme {
-  --color-bg: #f6f9fc;
-  --color-surface: #eef3f9;
-  --color-card: #ffffff;
-  --color-text: #0f1e33;
-  --color-muted: #51647d;
-  --color-faint: #93a3b8;
-  --color-accent: #0284c7;
-  --color-accent-soft: #06b6d4;
+  /* ---- aps brand (paper · ink · accent) — default palette ---- */
+  --color-bg: #f5f4ef;
+  --color-surface: #eeece2;
+  --color-card: #fbfaf6;
+  --color-text: #16150f;
+  --color-muted: #75726a;
+  --color-faint: #a8a496;
+  --color-accent: #2f6bff;
+  --color-accent-soft: #5b86ff;
   --color-on-accent: #ffffff;
-  --color-border: #e3ebf2;
-  --color-success: #0d9488;
-  --color-danger: #dc2626;
+  --color-border: #e2e0d7;
+  --color-success: #0fa968;
+  --color-danger: #d6453d;
 
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-display: "Fraunces", "Georgia", "Times New Roman", serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
   --font-serif: "Georgia", "Times New Roman", serif;
 }
 
 /* Theme-aware shadows: plain CSS vars so they re-resolve on toggle. */
 :root {
-  --shadow-soft: 0 1px 2px rgba(15, 30, 51, 0.04), 0 8px 24px -12px rgba(15, 30, 51, 0.12);
-  --shadow-lift: 0 2px 4px rgba(15, 30, 51, 0.06), 0 16px 40px -16px rgba(2, 132, 199, 0.28);
+  --shadow-soft: 0 1px 2px rgba(22, 21, 15, 0.04), 0 8px 24px -12px rgba(22, 21, 15, 0.12);
+  --shadow-lift: 0 2px 4px rgba(22, 21, 15, 0.06), 0 16px 40px -16px rgba(22, 21, 15, 0.18);
 }
 
 @utility shadow-soft { box-shadow: var(--shadow-soft); }
 @utility shadow-lift { box-shadow: var(--shadow-lift); }
 
 @layer base {
-  /* ---- Cool & airy (current) ---- */
+  /* ---- aps brand · Paper & ink (current, default) ---- */
   html[data-palette="current"] {
     color-scheme: light;
-    --color-bg: #f6f9fc;
-    --color-surface: #eef3f9;
-    --color-card: #ffffff;
-    --color-text: #0f1e33;
-    --color-muted: #51647d;
-    --color-faint: #93a3b8;
-    --color-accent: #0284c7;
-    --color-accent-soft: #06b6d4;
+    --color-bg: #f5f4ef;
+    --color-surface: #eeece2;
+    --color-card: #fbfaf6;
+    --color-text: #16150f;
+    --color-muted: #75726a;
+    --color-faint: #a8a496;
+    --color-accent: #2f6bff;
+    --color-accent-soft: #5b86ff;
     --color-on-accent: #ffffff;
-    --color-border: #e3ebf2;
-    --color-success: #0d9488;
-    --color-danger: #dc2626;
+    --color-border: #e2e0d7;
+    --color-success: #0fa968;
+    --color-danger: #d6453d;
   }
   html[data-palette="current"][data-theme="dark"] {
     color-scheme: dark;
-    --color-bg: #0a1420;
-    --color-surface: #0f1d2e;
-    --color-card: #122236;
-    --color-text: #e8f0f8;
-    --color-muted: #93a7bd;
-    --color-faint: #5d7088;
-    --color-accent: #38bdf8;
-    --color-accent-soft: #22d3ee;
-    --color-on-accent: #06283d;
-    --color-border: #1e3147;
-    --color-success: #2dd4bf;
-    --color-danger: #f87171;
+    --color-bg: #16150f;
+    --color-surface: #1e1d16;
+    --color-card: #23221a;
+    --color-text: #f5f4ef;
+    --color-muted: #a8a496;
+    --color-faint: #75726a;
+    --color-accent: #5b86ff;
+    --color-accent-soft: #84a3ff;
+    --color-on-accent: #0b0a06;
+    --color-border: #2d2b21;
+    --color-success: #2bc48a;
+    --color-danger: #e5675e;
     --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.4), 0 12px 32px -16px rgba(0, 0, 0, 0.6);
     --shadow-lift: 0 2px 6px rgba(0, 0, 0, 0.5), 0 20px 48px -18px rgba(0, 0, 0, 0.55);
   }
   @media (prefers-color-scheme: dark) {
     html[data-palette="current"]:not([data-theme="light"]) {
       color-scheme: dark;
-      --color-bg: #0a1420;
-      --color-surface: #0f1d2e;
-      --color-card: #122236;
-      --color-text: #e8f0f8;
-      --color-muted: #93a7bd;
-      --color-faint: #5d7088;
-      --color-accent: #38bdf8;
-      --color-accent-soft: #22d3ee;
-      --color-on-accent: #06283d;
-      --color-border: #1e3147;
-      --color-success: #2dd4bf;
-      --color-danger: #f87171;
+      --color-bg: #16150f;
+      --color-surface: #1e1d16;
+      --color-card: #23221a;
+      --color-text: #f5f4ef;
+      --color-muted: #a8a496;
+      --color-faint: #75726a;
+      --color-accent: #5b86ff;
+      --color-accent-soft: #84a3ff;
+      --color-on-accent: #0b0a06;
+      --color-border: #2d2b21;
+      --color-success: #2bc48a;
+      --color-danger: #e5675e;
       --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.4), 0 12px 32px -16px rgba(0, 0, 0, 0.6);
       --shadow-lift: 0 2px 6px rgba(0, 0, 0, 0.5), 0 20px 48px -18px rgba(0, 0, 0, 0.55);
     }
@@ -276,14 +280,19 @@
 }
 
 .eyebrow {
+  font-family: var(--font-mono);
   font-size: 0.72rem;
-  letter-spacing: 0.28em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--color-faint);
-  font-weight: 600;
+  font-weight: 500;
 }
 
-.section-index { font-variant-numeric: tabular-nums; letter-spacing: 0.1em; }
+.section-index {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.1em;
+}
 
 /* Reveal-on-scroll (supports stagger via --reveal-delay) */
 @keyframes reveal-up {

@@ -13,7 +13,7 @@ export function SectionHeader({ index, eyebrow, title, description }: SectionHea
         <span className="h-px w-8 bg-border" />
         <span className="eyebrow">{eyebrow}</span>
       </div>
-      <h2 className="text-3xl font-bold tracking-tight md:text-4xl">{title}</h2>
+      <h2 className="font-display text-3xl font-semibold tracking-tight md:text-4xl">{title}</h2>
       {description && <p className="mt-3 text-muted">{description}</p>}
     </div>
   );

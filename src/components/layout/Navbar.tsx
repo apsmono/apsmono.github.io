@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Menu, X, BookOpen, FileDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { AppearanceMenu } from "./AppearanceMenu";
-import { Logo } from "./Logo";
+import { Lockup } from "./Lockup";
 
 interface NavItem {
   label: string;
@@ -27,12 +27,9 @@ export function Navbar({ items, logo, logoAccent, onEnterReader, onDownloadPdf }
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-bg/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3.5">
-        <a href="#" className="flex items-center gap-2 text-xl font-bold tracking-tight text-text">
-          <Logo size={26} />
-          <span>
-            {logo}
-            <span className="text-accent">{logoAccent}</span>
-          </span>
+        <a href="#" className="flex items-center text-text" aria-label={`${logo}${logoAccent}`}>
+          {/* Official brand lockup artwork (swaps to white in dark mode). */}
+          <Lockup className="h-6 w-auto" alt={`${logo}${logoAccent}`} />
         </a>
 
         <div className="hidden items-center gap-7 md:flex">

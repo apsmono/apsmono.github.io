@@ -56,7 +56,7 @@ export function About({ photo, fallbackPhoto, bio, stats }: AboutProps) {
             <div className="mt-10 grid grid-cols-3 gap-4 border-t border-border pt-8">
               {stats.map((stat) => (
                 <div key={stat.label}>
-                  <div className="bg-gradient-to-r from-accent to-accent-soft bg-clip-text text-2xl font-bold text-transparent md:text-3xl">
+                  <div className="font-display text-2xl font-semibold text-accent md:text-3xl">
                     {stat.value}
                   </div>
                   <div className="mt-1 text-xs leading-snug text-faint">

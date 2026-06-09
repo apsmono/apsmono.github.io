@@ -32,10 +32,10 @@ export function Experience({ experience, education }: ExperienceProps) {
               {experience.map((job, i) => (
                 <li
                   key={i}
-                  className="reveal mb-8 last:mb-0"
+                  className="reveal relative mb-8 last:mb-0"
                   style={{ ["--reveal-delay" as string]: `${i * 90}ms` }}
                 >
-                  <span className="absolute -left-[7px] mt-1 h-3 w-3 rounded-full border-2 border-bg bg-accent" />
+                  <span className="absolute -left-[31px] top-1.5 h-3 w-3 rounded-full border-2 border-bg bg-accent" />
                   <div className="flex flex-wrap items-baseline justify-between gap-x-3">
                     <h3 className="text-base font-semibold text-text">{job.role}</h3>
                     <span className="text-xs text-faint">{job.period}</span>

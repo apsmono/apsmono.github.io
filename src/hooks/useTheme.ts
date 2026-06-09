@@ -21,7 +21,7 @@ export function useTheme() {
   });
   const [palette, setPaletteState] = useState<Palette>(() => {
     const stored = localStorage.getItem(PALETTE_KEY) as Palette;
-    return PALETTES.includes(stored) ? stored : "image";
+    return PALETTES.includes(stored) ? stored : "current";
   });
 
   useEffect(() => {
