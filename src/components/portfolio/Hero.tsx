@@ -1,5 +1,9 @@
+import { lazy, Suspense, useEffect, useRef, useState, type RefObject } from "react";
 import { Button } from "@/components/ui/Button";
 import { ArrowDown, MapPin } from "lucide-react";
+
+// Signature accent: lazy-loaded into its own chunk so it never affects LCP.
+const HeroCanvas = lazy(() => import("./HeroCanvas"));
 
 interface HeroProps {
   name: string;
@@ -8,6 +12,93 @@ interface HeroProps {
   availability: string;
   photo: string;
   fallbackPhoto: string;
+}
+
+/**
+ * Pointer-follow glow + gentle blob parallax. Mouse-only (pointer: fine),
+ * disabled under prefers-reduced-motion, and runs entirely via transforms
+ * on a lerped rAF loop — no React re-renders.
+ */
+function useCursorGlow(
+  section: RefObject<HTMLElement | null>,
+  glow: RefObject<HTMLDivElement | null>,
+  blobA: RefObject<HTMLDivElement | null>,
+  blobB: RefObject<HTMLDivElement | null>
+) {
+  useEffect(() => {
+    const el = section.current;
+    const glowEl = glow.current;
+    if (!el || !glowEl) return;
+    if (!window.matchMedia("(pointer: fine)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    let raf = 0;
+    let w = 1;
+    let h = 1;
+    let tx = 0, ty = 0; // target (pointer, section coords)
+    let gx = 0, gy = 0; // lerped position
+    const half = () => glowEl.offsetWidth / 2;
+
+    const tick = () => {
+      raf = 0;
+      gx += (tx - gx) * 0.14;
+      gy += (ty - gy) * 0.14;
+
+      glowEl.style.transform = `translate3d(${gx - half()}px, ${gy - half()}px, 0)`;
+
+      // Blobs drift subtly toward/away from the pointer (parallax).
+      const nx = gx / w - 0.5;
+      const ny = gy / h - 0.5;
+      if (blobA.current)
+        blobA.current.style.transform = `translate3d(${nx * 26}px, ${ny * 18}px, 0)`;
+      if (blobB.current)
+        blobB.current.style.transform = `translate3d(${nx * -32}px, ${ny * -22}px, 0)`;
+
+      if (Math.abs(tx - gx) > 0.5 || Math.abs(ty - gy) > 0.5) {
+        raf = requestAnimationFrame(tick);
+      }
+    };
+
+    const schedule = () => {
+      if (!raf) raf = requestAnimationFrame(tick);
+    };
+
+    const onMove = (e: PointerEvent) => {
+      const r = el.getBoundingClientRect();
+      w = r.width;
+      h = r.height;
+      tx = e.clientX - r.left;
+      ty = e.clientY - r.top;
+      schedule();
+    };
+
+    const onEnter = (e: PointerEvent) => {
+      // Start from the entry point so the glow doesn't streak across.
+      const r = el.getBoundingClientRect();
+      gx = tx = e.clientX - r.left;
+      gy = ty = e.clientY - r.top;
+      glowEl.style.opacity = "1";
+      schedule();
+    };
+
+    const onLeave = () => {
+      glowEl.style.opacity = "0";
+      // Let the blobs ease back to rest.
+      tx = w / 2;
+      ty = h / 2;
+      schedule();
+    };
+
+    el.addEventListener("pointermove", onMove);
+    el.addEventListener("pointerenter", onEnter);
+    el.addEventListener("pointerleave", onLeave);
+    return () => {
+      el.removeEventListener("pointermove", onMove);
+      el.removeEventListener("pointerenter", onEnter);
+      el.removeEventListener("pointerleave", onLeave);
+      cancelAnimationFrame(raf);
+    };
+  }, [section, glow, blobA, blobB]);
 }
 
 export function Hero({
@@ -20,17 +111,66 @@ export function Hero({
 }: HeroProps) {
   const [first, ...rest] = name.split(" ");
 
+  const sectionRef = useRef<HTMLElement>(null);
+  const glowRef = useRef<HTMLDivElement>(null);
+  const blobARef = useRef<HTMLDivElement>(null);
+  const blobBRef = useRef<HTMLDivElement>(null);
+  useCursorGlow(sectionRef, glowRef, blobARef, blobBRef);
+
+  // Mount the particle canvas only after the page has loaded and gone idle,
+  // and never under prefers-reduced-motion (blobs remain as the static fallback).
+  const [particles, setParticles] = useState(false);
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let cancelled = false;
+    let idleId: number | undefined;
+    let timerId: number | undefined;
+    const fire = () => {
+      if (!cancelled) setParticles(true);
+    };
+    const start = () => {
+      if (typeof window.requestIdleCallback === "function") {
+        idleId = window.requestIdleCallback(fire, { timeout: 2500 });
+      } else {
+        timerId = window.setTimeout(fire, 400);
+      }
+    };
+    if (document.readyState === "complete") start();
+    else window.addEventListener("load", start, { once: true });
+    return () => {
+      cancelled = true;
+      window.removeEventListener("load", start);
+      if (idleId !== undefined && typeof window.cancelIdleCallback === "function") {
+        window.cancelIdleCallback(idleId);
+      }
+      if (timerId !== undefined) window.clearTimeout(timerId);
+    };
+  }, []);
+
   return (
-    <section className="bg-grain relative min-h-screen overflow-hidden px-6 pt-28 pb-16 md:pt-32">
-      {/* Soft cool blobs */}
+    <section
+      ref={sectionRef}
+      className="bg-grain relative min-h-screen overflow-hidden px-6 pt-28 pb-16 md:pt-32"
+    >
+      {/* Soft cool blobs (drift toward the pointer) */}
       <div
+        ref={blobARef}
         aria-hidden
         className="pointer-events-none absolute -left-24 top-24 -z-10 h-72 w-72 rounded-full bg-accent/15 blur-3xl"
       />
       <div
+        ref={blobBRef}
         aria-hidden
         className="pointer-events-none absolute -right-16 top-48 -z-10 h-80 w-80 rounded-full bg-accent-soft/15 blur-3xl"
       />
+      {/* Cursor-follow glow (activated for fine pointers only) */}
+      <div ref={glowRef} aria-hidden className="hero-glow pointer-events-none -z-10" />
+      {/* Particle constellation (lazy, post-load, motion-safe) */}
+      {particles && (
+        <Suspense fallback={null}>
+          <HeroCanvas />
+        </Suspense>
+      )}
 
       <div className="mx-auto grid max-w-6xl items-center gap-12 md:grid-cols-[1.05fr_0.95fr] md:gap-16">
         {/* Text column */}

@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 import { Navbar } from "@/components/layout/Navbar";
+import { IntroSplash } from "@/components/layout/IntroSplash";
 import { Footer } from "@/components/layout/Footer";
 import { Hero } from "./Hero";
 import { About } from "./About";
@@ -25,6 +26,7 @@ export function PortfolioPage() {
 
   return (
     <div className="min-h-screen bg-bg text-text">
+      <IntroSplash />
       <Navbar
         logo="aps"
         logoAccent="mono"

@@ -16,36 +16,50 @@ degrade gracefully under `prefers-reduced-motion` (already wired globally in
   with the accent on hover.
 - Theme/palette transitions: background and text color cross-fade on toggle.
 
-## Phase 1 — micro-interactions (low effort, high polish)
+## Phase 1 — micro-interactions ✅ shipped
 
-- Animated theme/palette switch (a soft radial wipe from the toggle, or a quick
-  cross-dissolve) instead of an instant swap.
-- Magnetic / springy buttons and nav links on hover (CSS transforms only).
-- Animated counters for the About stats (count up when scrolled into view).
-- Nav bar: condense + add shadow on scroll; active-section link highlighting via
-  IntersectionObserver.
-- Cursor-follow glow on the hero blobs (respect reduced-motion + pointer: fine).
+- **Animated theme/palette switch**: radial wipe from the click point via the View
+  Transitions API (`withThemeWipe` in `useTheme`); keyboard activation falls back to
+  a cross-dissolve, unsupported browsers / reduced-motion to an instant swap.
+- **Springy buttons and nav links**: `.springy` utility (transform + soft press on
+  `:active`), applied to `Button`, nav links, and the navbar pills.
+- **Animated counters**: `CountUp` component parses stat strings ("~4 yrs") and
+  counts the numeric part up on first view; reduced-motion renders final value.
+- **Nav bar**: condenses + gains shadow past 24px scroll; active-section link
+  highlighting via `useActiveSection` (IntersectionObserver) with a sliding accent
+  underline (`.nav-link`).
+- **Cursor-follow glow**: `useCursorGlow` in Hero — lerped rAF loop drives a follow
+  glow + blob parallax with transforms only; gated on `pointer: fine` and
+  reduced-motion.
 
-Tooling: no new dependencies needed — CSS + small hooks.
+Tooling: no new dependencies — CSS + small hooks, as planned.
 
-## Phase 2 — orchestrated motion (medium effort)
+## Phase 2 — orchestrated motion ✅ shipped
 
-- Adopt a motion library (recommended: **Framer Motion / `motion`**) for declarative
-  enter/exit, layout animations, and shared-element transitions.
-- Replace the bespoke `useReveal` with `whileInView` variants + stagger containers.
-- Project cards: layout animation on filter/sort; modal/expand for case studies.
-- Page-level route transitions if/when the site grows beyond one page.
+- **`motion` adopted** (measured cost: ~38 KB gzipped — within the 30–50 KB budget).
+  `MotionConfig reducedMotion="user"` strips transforms for reduced-motion users.
+- **`useReveal` replaced** with `whileInView` variants + stagger containers
+  (shared variants in `src/lib/motion.ts`; hook and `.reveal` CSS removed).
+- **Project tag filter**: chips for tags on 2+ projects, sliding active pill
+  (`layoutId`), grid reflow via `layout` + `AnimatePresence mode="popLayout"`.
+  The featured card morphs into the grid when a filter is active.
+- **Project detail modal**: shared-element morph from card → dialog (`layoutId`),
+  with scroll lock, Escape/backdrop close, and focus restore.
+- Page-level route transitions: still deferred until the site has multiple pages.
 
-Trade-off: adds ~30–50 KB gzipped. Worth it once there are several animated surfaces;
-overkill for the current single page.
+## Phase 3 — signature moments ✅ shipped
 
-## Phase 3 — signature moments (higher effort, do sparingly)
-
-- A hero canvas/WebGL accent (e.g. subtle particle field or gradient mesh that reacts
-  to pointer) — lazy-loaded, with a static fallback.
-- Scroll-driven storytelling for a featured project (pinned section, progress-linked
-  animation) using the native CSS `scroll-timeline` where supported.
-- An animated SVG logo draw-on for the first visit.
+- **Hero particle constellation** (`HeroCanvas`): pointer-reactive canvas-2D accent,
+  lazy-loaded into its own chunk (~1.2 KB gz) after page load + idle, paused when
+  offscreen or tab-hidden, accent-aware across palettes. Static blobs remain the
+  reduced-motion/initial fallback — LCP untouched.
+- **Scroll-driven story** (`ScrollHighlights`): the GetGoing highlights become a
+  pinned, progress-linked step-through (motion `useScroll` for cross-browser support
+  instead of CSS `scroll-timeline`). Desktop only; mobile and reduced-motion get the
+  static list; full list kept for screen readers.
+- **Logo draw-on** (`IntroSplash`): the "a" mark strokes itself in on first visit
+  (~1.4s total, once per session via sessionStorage), holding the hero entrance so
+  it plays on reveal. Skipped under reduced motion.
 
 ## Performance & accessibility guardrails
 
@@ -54,9 +68,9 @@ overkill for the current single page.
 - Honor `prefers-reduced-motion` for every effect (global reset already in place).
 - Budget: keep total JS for motion under ~50 KB gzipped until there's clear payoff.
 
-## Recommendation
+## Status
 
-Phase 0 (done) + Phase 1 give ~80% of the "feels alive and professional" impression
-for very little cost and no new dependencies. Pursue Phase 2 only when adding more
-pages or interactive project views; reserve Phase 3 for one or two signature moments
-so the site stays fast and tasteful.
+All phases shipped (June 2026). Bundle cost of motion work: ~48 KB gzipped over the
+Phase 0 baseline (motion library + components), plus a ~1.2 KB lazy chunk for the
+hero canvas. Remaining deferred item: page-level route transitions, to revisit
+if/when the site grows beyond one page.

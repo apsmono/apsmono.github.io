@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type MouseEvent as ReactMouseEvent } from "react";
 import { Sun, Moon, Monitor, Palette as PaletteIcon, Check, ChevronDown } from "lucide-react";
 import { useThemeContext } from "./ThemeProvider";
 import type { Theme, Palette } from "@/hooks/useTheme";
@@ -16,6 +16,10 @@ const palettes: { value: Palette; label: string; dots: [string, string, string] 
   { value: "image", label: "Coral & teal", dots: ["#4f9aa1", "#c97b6b", "#f3f6f7"] },
   { value: "dev", label: "Indigo & slate", dots: ["#4f46e5", "#6366f1", "#f8fafc"] },
 ];
+
+/** Pointer position for the theme wipe; keyboard activation (detail 0) → none. */
+const wipeOrigin = (e: ReactMouseEvent) =>
+  e.detail === 0 ? undefined : { x: e.clientX, y: e.clientY };
 
 export function AppearanceMenu() {
   const { theme, setTheme, palette, setPalette } = useThemeContext();
@@ -45,7 +49,7 @@ export function AppearanceMenu() {
         aria-haspopup="menu"
         aria-expanded={open}
         aria-label="Appearance settings"
-        className="group inline-flex items-center rounded-full border border-border bg-card/70 px-2.5 py-1.5 text-sm text-muted shadow-sm backdrop-blur-sm transition-colors hover:text-text"
+        className="group springy inline-flex items-center rounded-full border border-border bg-card/70 px-2.5 py-1.5 text-sm text-muted shadow-sm backdrop-blur-sm hover:text-text"
       >
         <PaletteIcon size={15} className="shrink-0" />
         <span
@@ -81,7 +85,7 @@ export function AppearanceMenu() {
             {modes.map(({ value, label, Icon }) => (
               <button
                 key={value}
-                onClick={() => setTheme(value)}
+                onClick={(e) => setTheme(value, wipeOrigin(e))}
                 aria-pressed={theme === value}
                 className={cn(
                   "flex items-center justify-center gap-1.5 rounded-lg py-1.5 text-xs font-medium transition-colors",
@@ -105,7 +109,7 @@ export function AppearanceMenu() {
                 key={p.value}
                 role="menuitemradio"
                 aria-checked={palette === p.value}
-                onClick={() => setPalette(p.value)}
+                onClick={(e) => setPalette(p.value, wipeOrigin(e))}
                 className={cn(
                   "flex items-center gap-3 rounded-lg px-2 py-2 text-left text-sm transition-colors",
                   palette === p.value ? "bg-surface text-text" : "text-muted hover:bg-surface/60 hover:text-text"

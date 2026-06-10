@@ -1,6 +1,8 @@
+import { motion } from "motion/react";
 import { Button } from "@/components/ui/Button";
+import { CountUp } from "@/components/ui/CountUp";
 import { SectionHeader } from "./SectionHeader";
-import { useReveal } from "@/hooks/useReveal";
+import { stagger, fadeUp, VIEWPORT } from "@/lib/motion";
 
 interface Stat {
   value: string;
@@ -15,8 +17,6 @@ interface AboutProps {
 }
 
 export function About({ photo, fallbackPhoto, bio, stats }: AboutProps) {
-  const ref = useReveal<HTMLDivElement>();
-
   return (
     <section id="about" className="border-t border-border bg-surface px-6 py-24">
       <div className="mx-auto max-w-6xl">
@@ -26,12 +26,15 @@ export function About({ photo, fallbackPhoto, bio, stats }: AboutProps) {
           title="Reliability-minded engineer, growing into AI."
         />
 
-        <div
-          ref={ref}
-          className="reveal grid gap-12 md:grid-cols-[0.8fr_1.2fr] md:gap-16"
+        <motion.div
+          variants={stagger(0.12)}
+          initial="hidden"
+          whileInView="show"
+          viewport={VIEWPORT}
+          className="grid gap-12 md:grid-cols-[0.8fr_1.2fr] md:gap-16"
         >
           {/* Portrait */}
-          <div className="relative mx-auto w-full max-w-xs md:max-w-none">
+          <motion.div variants={fadeUp} className="relative mx-auto w-full max-w-xs md:max-w-none">
             <div className="overflow-hidden rounded-2xl border border-border shadow-soft">
               <img
                 src={photo}
@@ -43,10 +46,10 @@ export function About({ photo, fallbackPhoto, bio, stats }: AboutProps) {
               />
             </div>
             <div className="absolute -bottom-4 -right-4 -z-10 h-24 w-24 rounded-2xl border border-accent/40" />
-          </div>
+          </motion.div>
 
           {/* Bio + stats */}
-          <div>
+          <motion.div variants={fadeUp}>
             <div className="space-y-4 text-[15px] leading-relaxed text-muted md:text-base">
               {bio.map((paragraph, i) => (
                 <p key={i} dangerouslySetInnerHTML={{ __html: paragraph }} />
@@ -57,7 +60,7 @@ export function About({ photo, fallbackPhoto, bio, stats }: AboutProps) {
               {stats.map((stat) => (
                 <div key={stat.label}>
                   <div className="font-display text-2xl font-semibold text-accent md:text-3xl">
-                    {stat.value}
+                    <CountUp value={stat.value} />
                   </div>
                   <div className="mt-1 text-xs leading-snug text-faint">
                     {stat.label}
@@ -72,8 +75,8 @@ export function About({ photo, fallbackPhoto, bio, stats }: AboutProps) {
             >
               Let's Talk
             </Button>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );

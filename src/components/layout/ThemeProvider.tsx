@@ -1,11 +1,16 @@
 import { createContext, useContext, type ReactNode } from "react";
-import { useTheme, type Theme, type Palette } from "@/hooks/useTheme";
+import {
+  useTheme,
+  type Theme,
+  type Palette,
+  type TransitionOrigin,
+} from "@/hooks/useTheme";
 
 interface ThemeContextValue {
   theme: Theme;
-  setTheme: (t: Theme) => void;
+  setTheme: (t: Theme, origin?: TransitionOrigin) => void;
   palette: Palette;
-  setPalette: (p: Palette) => void;
+  setPalette: (p: Palette, origin?: TransitionOrigin) => void;
   effective: "dark" | "light";
 }
 
