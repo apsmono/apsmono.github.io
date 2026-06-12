@@ -1,3 +1,5 @@
+import type { Project } from "@/types";
+
 export const siteConfig = {
   name: "Arif Eko Pramono",
   tagline: "Product Engineer — React · React Native · Firebase · AI agents. Reliability-minded, growing into AI & agent engineering.",
@@ -45,21 +47,32 @@ export const siteConfig = {
       location: "Remote",
       highlights: [
         "One of ~4 engineers on a lean product team — own features end to end across the traveler app, the guide app, the marketing site, and the internal Travel Manager dashboard, spanning iOS, Android, and web.",
-        "Substantial contributor (~155+ commits) to the GetGoing traveler app (React Native + Expo + TypeScript, 4.8★ on Google Play) — trip planner, local-guide and package booking, in-app chat, maps, Xendit payments, and a camera scan-itinerary flow.",
+        "Core feature contributor to the GetGoing traveler app (React Native + Expo + TypeScript, 4.8★ on Google Play) — trip planner, local-guide and package booking, in-app chat, maps, Xendit payments, and a camera scan-itinerary flow.",
         "Hardened the dashboard's most fragile flows: built a pre-publish validator and error modal, migrated live itinerary data shapes (array→object) with server-side backfill, and recovered lost data via lazy migrations — eliminating silent data loss in the publish pipeline.",
-        "Authored the majority of the Firebase Cloud Functions v2 backend (Node 22), helping split a Next.js monorepo into a deploy-isolated functions repo across 10 domain codebases.",
-        "Fixed transactional integrity bugs in the user wallet (runTransaction race/safety) and shipped Cloud Functions for payments (Xendit), feedback, and AI generation (Gemini / Imagen / Vertex AI); built firebase-admin tooling for surgical recovery of corrupted, deeply-nested Firestore records.",
+        "Contributed to the Firebase Cloud Functions v2 backend (Node 22) — wrote production functions for payments (Xendit), feedback, and AI generation (Gemini / Imagen / Vertex AI), fixed backend bugs, and helped split a Next.js monorepo into a deploy-isolated functions repo across 10 domain codebases.",
+        "Fixed transactional integrity bugs in the user wallet (runTransaction race/safety) and built firebase-admin tooling for surgical recovery of corrupted, deeply-nested Firestore records.",
       ],
     },
   ],
   projects: [
     {
+      name: "Intel Digest",
+      description:
+        "Autonomous AI research agent that produces a weekly competitor/market brief and emails it. Engineered like a product: per-run token & tool-call budget guardrails, idempotent scheduled runs, model routing. Working build — not yet launched.",
+      tags: ["Python", "CrewAI", "Cloud Run", "Firestore"],
+      // sourceUrl omitted: mas-agentic is private — add back once it's public (see github-profile-plan).
+      icon: "Newspaper",
+      status: "active",
+    },
+    {
       name: "Solo Leveling",
       description:
         "Central brain & command center for personal development, financial freedom, and connected-tool automation. Integrates with Notion, Google Drive, and Gmail.",
       tags: ["Python", "FastAPI", "Docker", "PostgreSQL"],
-      sourceUrl: "https://github.com/apsmono/solo-leveling",
+      // solo-leveling repo is private; link to the public workspace monorepo that documents it.
+      sourceUrl: "https://github.com/apsmono/projects",
       icon: "Brain",
+      status: "active",
     },
     {
       name: "Wedding Invitation",
@@ -69,6 +82,7 @@ export const siteConfig = {
       liveUrl: "https://apsmono.github.io/wedding-invitation/",
       sourceUrl: "https://github.com/apsmono/wedding-invitation",
       icon: "Heart",
+      status: "shipped",
     },
     {
       name: "Koperasi KKS",
@@ -77,6 +91,7 @@ export const siteConfig = {
       tags: ["HTML5", "CSS3", "JavaScript"],
       sourceUrl: "https://github.com/apsmono/koperasi",
       icon: "Landmark",
+      status: "shipped",
     },
     {
       name: "makeICS",
@@ -85,6 +100,7 @@ export const siteConfig = {
       tags: ["Python", "iCalendar"],
       sourceUrl: "https://github.com/apsmono/makeICS",
       icon: "CalendarDays",
+      status: "shipped",
     },
     {
       name: "Scrapers",
@@ -92,18 +108,20 @@ export const siteConfig = {
         "Python automation scripts for data collection and processing. Modular scrapers with environment-based config and clean logging.",
       tags: ["Python", "Automation"],
       sourceUrl: "https://github.com/apsmono/projects/tree/master/scrapers",
-      icon: "Spider",
+      icon: "Bug",
+      status: "active",
     },
     {
       name: "Command Center Dashboard",
       description:
-        "An authenticated command center (Cmd+K palette, library stats, integration health) built on React 19 + TypeScript with Firebase Auth. Runs on its own subdomain, gated by Google Sign-In.",
+        "An authenticated command center (Cmd+K palette, library stats, integration health, job-application tracker on Firestore) built on React 19 + TypeScript with Firebase Auth. Runs on its own subdomain, gated by Google Sign-In.",
       tags: ["React 19", "TypeScript", "Tailwind CSS", "Firebase"],
       liveUrl: "https://dashboard.apsmono.com",
       sourceUrl: "https://github.com/apsmono/dashboard",
       icon: "LayoutDashboard",
+      status: "active",
     },
-  ],
+  ] satisfies Project[],
   skills: [
     { name: "React", icon: "Atom" },
     { name: "React Native", icon: "Smartphone" },
