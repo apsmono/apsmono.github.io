@@ -2,15 +2,55 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { CardTitle } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
-import { ArrowUpRight, X } from "lucide-react";
+import { ArrowUpRight, History, X } from "lucide-react";
 import * as LucideIcons from "lucide-react";
-import type { Project } from "@/types";
+import type { Project, ProjectStatus } from "@/types";
 import { cn } from "@/lib/utils";
 import { SectionHeader } from "./SectionHeader";
 import { stagger, fadeUp, VIEWPORT, EASE } from "@/lib/motion";
+import { repoFromUrl, useRepoActivity } from "@/hooks/useRepoActivity";
 
 interface ProjectsProps {
   projects: Project[];
+}
+
+const STATUS_META: Record<ProjectStatus, { label: string; variant: "default" | "success" | "accent" }> = {
+  shipped: { label: "Shipped", variant: "success" },
+  active: { label: "Active", variant: "accent" },
+  wip: { label: "WIP", variant: "default" },
+};
+
+/** Coarse relative time for "last push" — honest without ticking clocks. */
+function relativePush(iso: string): string {
+  const days = Math.floor((Date.now() - new Date(iso).getTime()) / 86_400_000);
+  if (days <= 0) return "today";
+  if (days === 1) return "yesterday";
+  if (days < 30) return `${days} days ago`;
+  if (days < 365) {
+    const months = Math.floor(days / 30);
+    return months === 1 ? "1 month ago" : `${months} months ago`;
+  }
+  const years = Math.floor(days / 365);
+  return years === 1 ? "1 year ago" : `${years} years ago`;
+}
+
+/** Status badge + live last-push line, shared by featured card, grid card, and modal. */
+function ProjectPulse({ project, pushedAt }: { project: Project; pushedAt?: string }) {
+  if (!project.status && !pushedAt) return null;
+  return (
+    <div className="mb-2 flex items-center gap-2">
+      {project.status && (
+        <Badge variant={STATUS_META[project.status].variant}>
+          {STATUS_META[project.status].label}
+        </Badge>
+      )}
+      {pushedAt && (
+        <span className="flex items-center gap-1 text-xs text-muted" title={pushedAt}>
+          <History size={12} /> Last push {relativePush(pushedAt)}
+        </span>
+      )}
+    </div>
+  );
 }
 
 type IconComp = React.ComponentType<{ size?: number; className?: string }>;
@@ -36,15 +76,17 @@ function ProjectLinks({ project, size = "sm" }: { project: Project; size?: "sm" 
           Live Demo <ArrowUpRight size={14} />
         </a>
       )}
-      <a
-        href={project.sourceUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={(e) => e.stopPropagation()}
-        className="flex items-center gap-1 text-accent hover:underline"
-      >
-        Source Code <ArrowUpRight size={14} />
-      </a>
+      {project.sourceUrl && (
+        <a
+          href={project.sourceUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={(e) => e.stopPropagation()}
+          className="flex items-center gap-1 text-accent hover:underline"
+        >
+          Source Code <ArrowUpRight size={14} />
+        </a>
+      )}
     </div>
   );
 }
@@ -93,7 +135,7 @@ const interactiveCardProps = (onOpen: () => void) => ({
   },
 });
 
-function FeaturedCard({ project, onOpen }: { project: Project; onOpen: () => void }) {
+function FeaturedCard({ project, pushedAt, onOpen }: { project: Project; pushedAt?: string; onOpen: () => void }) {
   const Icon = iconFor(project.icon);
   return (
     <motion.div
@@ -116,6 +158,7 @@ function FeaturedCard({ project, onOpen }: { project: Project; onOpen: () => voi
       </div>
       <div className="flex flex-col p-6 md:py-8 md:pr-8">
         <CardTitle className="text-xl">{project.name}</CardTitle>
+        <ProjectPulse project={project} pushedAt={pushedAt} />
         <p className="mb-4 flex-1 text-sm text-muted md:text-base">{project.description}</p>
         <div className="mb-5 flex flex-wrap gap-2">
           {project.tags.map((tag) => (
@@ -130,7 +173,7 @@ function FeaturedCard({ project, onOpen }: { project: Project; onOpen: () => voi
   );
 }
 
-function ProjectCard({ project, onOpen }: { project: Project; onOpen: () => void }) {
+function ProjectCard({ project, pushedAt, onOpen }: { project: Project; pushedAt?: string; onOpen: () => void }) {
   const Icon = iconFor(project.icon);
   return (
     <motion.div
@@ -150,6 +193,7 @@ function ProjectCard({ project, onOpen }: { project: Project; onOpen: () => void
       </div>
       <div className="flex flex-1 flex-col p-5">
         <CardTitle className="text-base">{project.name}</CardTitle>
+        <ProjectPulse project={project} pushedAt={pushedAt} />
         <p className="mb-4 flex-1 text-sm text-muted">{project.description}</p>
         <div className="mb-4 flex flex-wrap gap-2">
           {project.tags.map((tag) => (
@@ -164,7 +208,7 @@ function ProjectCard({ project, onOpen }: { project: Project; onOpen: () => void
   );
 }
 
-function ProjectModal({ project, onClose }: { project: Project; onClose: () => void }) {
+function ProjectModal({ project, pushedAt, onClose }: { project: Project; pushedAt?: string; onClose: () => void }) {
   const Icon = iconFor(project.icon);
   const closeRef = useRef<HTMLButtonElement>(null);
 
@@ -218,6 +262,7 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
           </div>
           <div className="p-6 md:p-8">
             <CardTitle className="text-2xl">{project.name}</CardTitle>
+            <ProjectPulse project={project} pushedAt={pushedAt} />
             <p className="mb-5 text-[15px] leading-relaxed text-muted md:text-base">
               {project.description}
             </p>
@@ -253,6 +298,11 @@ export function Projects({ projects }: ProjectsProps) {
   const [featured, ...rest] = projects;
   const showFeatured = filter === null;
   const gridProjects = filter ? projects.filter((p) => p.tags.includes(filter)) : rest;
+  const activity = useRepoActivity(projects.map((p) => repoFromUrl(p.sourceUrl)));
+  const pushedFor = (p: Project) => {
+    const repo = repoFromUrl(p.sourceUrl);
+    return repo ? activity[repo] : undefined;
+  };
 
   return (
     <section id="projects" className="border-t border-border px-6 py-24">
@@ -295,6 +345,7 @@ export function Projects({ projects }: ProjectsProps) {
                 <FeaturedCard
                   key={layoutIdFor(featured)}
                   project={featured}
+                  pushedAt={pushedFor(featured)}
                   onOpen={() => setSelected(featured)}
                 />
               )}
@@ -307,6 +358,7 @@ export function Projects({ projects }: ProjectsProps) {
                   <ProjectCard
                     key={layoutIdFor(project)}
                     project={project}
+                    pushedAt={pushedFor(project)}
                     onOpen={() => setSelected(project)}
                   />
                 ))}
@@ -318,7 +370,9 @@ export function Projects({ projects }: ProjectsProps) {
 
       {/* Detail modal (shared-element morph from the card) */}
       <AnimatePresence>
-        {selected && <ProjectModal project={selected} onClose={() => setSelected(null)} />}
+        {selected && (
+          <ProjectModal project={selected} pushedAt={pushedFor(selected)} onClose={() => setSelected(null)} />
+        )}
       </AnimatePresence>
     </section>
   );

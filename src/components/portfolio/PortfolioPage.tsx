@@ -36,6 +36,7 @@ export function PortfolioPage() {
           { label: "Projects", href: "#projects" },
           { label: "Skills", href: "#skills" },
           { label: "Contact", href: "#contact" },
+          { label: "Dashboard", href: "https://dashboard.apsmono.com" },
         ]}
         onEnterReader={() => setReader(true)}
         onDownloadPdf={downloadPdf}

@@ -30,13 +30,18 @@ export interface DashboardStats {
   integrations: Record<string, boolean>;
 }
 
+export type ProjectStatus = "shipped" | "active" | "wip";
+
 export interface Project {
   name: string;
   description: string;
   tags: string[];
   liveUrl?: string;
-  sourceUrl: string;
+  /** Omit while the repo is private — avoids a dead link for visitors. */
+  sourceUrl?: string;
   icon: string;
+  /** Editorial status shown as a badge; last-push date comes live from GitHub. */
+  status?: ProjectStatus;
 }
 
 export interface Skill {
