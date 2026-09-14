@@ -49,6 +49,11 @@ GitHub Actions (`.github/workflows/deploy.yml`) builds on every push to `master`
 publishes `dist/` to GitHub Pages. The `apsmono.com` custom domain and **Enforce HTTPS**
 are configured in repo → Settings → Pages; the apex domain is set via `CNAME`.
 
+## Documentation
+
+- [`docs/ANIMATION_PLAN.md`](docs/ANIMATION_PLAN.md) — Motion design milestones, performance guardrails, and implementation phases.
+- [`docs/TODO.md`](docs/TODO.md) — Feature roadmap, project catalog updates, SEO enhancements, and planned improvements.
+
 ---
 
 Maintained by [Arif (@apsmono)](https://github.com/apsmono) · React · React Native · Firebase · growing into AI / agent engineering.

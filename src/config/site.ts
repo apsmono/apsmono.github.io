@@ -54,6 +54,23 @@ export const siteConfig = {
   ],
   projects: [
     {
+      name: "Sort Visualizer",
+      description:
+        "Interactive sorting algorithm visualizer with invertible step-by-step playback (forward/reverse), Big-O complexity cards, live operation counters, and full keyboard navigation.",
+      tags: ["React", "TypeScript", "Tailwind CSS", "Vite", "Algorithms"],
+      sourceUrl: "https://github.com/apsmono/sort-visualizer",
+      icon: "BarChart3",
+    },
+    {
+      name: "Interactive Course Platform",
+      description:
+        "Bilingual (Bahasa Indonesia / English) open-learning platform for mathematics and computer science with static MDX rendering, KaTeX equations, client search, and interactive practice tests.",
+      tags: ["Next.js", "TypeScript", "Tailwind CSS", "MDX"],
+      liveUrl: "https://course.apsmono.com",
+      sourceUrl: "https://github.com/apsmono/online-course",
+      icon: "GraduationCap",
+    },
+    {
       name: "Solo Leveling",
       description:
         "Central brain & command center for personal development, financial freedom, and connected-tool automation. Integrates with Notion, Google Drive, and Gmail.",
@@ -62,13 +79,30 @@ export const siteConfig = {
       icon: "Brain",
     },
     {
+      name: "Tower Planner",
+      description:
+        "Strategy and progression dashboard for The Tower game. Features smart clipboard summary parsing, research scoring algorithms, cell budget forecasting, and multi-device sync.",
+      tags: ["React", "TypeScript", "Tailwind CSS", "Zustand", "Vite"],
+      sourceUrl: "https://github.com/apsmono/tower-planner",
+      icon: "Layers",
+    },
+    {
       name: "Wedding Invitation",
       description:
         "Digital wedding invitation for Amal & Arif — mobile-first, modern minimalist design with countdown timer, RSVP via WhatsApp, and photo gallery.",
-      tags: ["Vite", "React 19", "TypeScript", "Tailwind CSS"],
+      tags: ["React", "TypeScript", "Tailwind CSS", "Vite"],
       liveUrl: "https://apsmono.github.io/wedding-invitation/",
       sourceUrl: "https://github.com/apsmono/wedding-invitation",
       icon: "Heart",
+    },
+    {
+      name: "Command Center Dashboard",
+      description:
+        "An authenticated command center (Cmd+K palette, library stats, integration health) built on React 19 + TypeScript with Firebase Auth. Runs on its own subdomain, gated by Google Sign-In.",
+      tags: ["React", "TypeScript", "Tailwind CSS", "Firebase"],
+      liveUrl: "https://dashboard.apsmono.com",
+      sourceUrl: "https://github.com/apsmono/dashboard",
+      icon: "LayoutDashboard",
     },
     {
       name: "Koperasi KKS",
@@ -82,7 +116,7 @@ export const siteConfig = {
       name: "makeICS",
       description:
         "Translate data sources into iCalendar format so you can sync them directly to your phone's calendar. Simple, scriptable, and useful.",
-      tags: ["Python", "iCalendar"],
+      tags: ["Python", "Automation"],
       sourceUrl: "https://github.com/apsmono/makeICS",
       icon: "CalendarDays",
     },
@@ -93,15 +127,6 @@ export const siteConfig = {
       tags: ["Python", "Automation"],
       sourceUrl: "https://github.com/apsmono/projects/tree/master/scrapers",
       icon: "Spider",
-    },
-    {
-      name: "Command Center Dashboard",
-      description:
-        "An authenticated command center (Cmd+K palette, library stats, integration health) built on React 19 + TypeScript with Firebase Auth. Runs on its own subdomain, gated by Google Sign-In.",
-      tags: ["React 19", "TypeScript", "Tailwind CSS", "Firebase"],
-      liveUrl: "https://dashboard.apsmono.com",
-      sourceUrl: "https://github.com/apsmono/dashboard",
-      icon: "LayoutDashboard",
     },
   ],
   skills: [
