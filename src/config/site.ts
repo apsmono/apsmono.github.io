@@ -69,8 +69,8 @@ export const siteConfig = {
       description:
         "Central brain & command center for personal development, financial freedom, and connected-tool automation. Integrates with Notion, Google Drive, and Gmail.",
       tags: ["Python", "FastAPI", "Docker", "PostgreSQL"],
-      // solo-leveling repo is private; link to the public workspace monorepo that documents it.
-      sourceUrl: "https://github.com/apsmono/projects",
+      // sourceUrl omitted: solo-leveling is private, and apsmono/projects (the old
+      // workspace monorepo) is now private + archived, so any link here 404s for visitors.
       icon: "Brain",
       status: "active",
     },
@@ -107,7 +107,7 @@ export const siteConfig = {
       description:
         "Python automation scripts for data collection and processing. Modular scrapers with environment-based config and clean logging.",
       tags: ["Python", "Automation"],
-      sourceUrl: "https://github.com/apsmono/projects/tree/master/scrapers",
+      sourceUrl: "https://github.com/apsmono/scrapers",
       icon: "Bug",
       status: "active",
     },
